@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расчет стоимости топлива</title>
+</head>
+<body>
+    <h1>Калькулятор стоимости топлива</h1>
+    <div>
+        <h3>Выбор топлива</h3>
+        <label><input type="checkbox" id="Gas">Бензин</label>
+        <span>Стоимость: <input type="number" id="priceGas" value="50" min="1" step="1"> грн</span>
+        <br>
+        <label><input type="checkbox" id="disel">Дизель</label>
+        <span>Стоимость: <input type="number" id="priceDisel" value="30" min="1" step="1"> грн</span>
+        <br>
+        <label for="liters">Количество (литры):</label>
+        <input type="number" id="liters" value="1" min="1">
+    </div>
+    <div>
+        <h3>Оплата</h3>
+        <div>
+            <label>Валюта:</label>
+            <label><input type="radio" name="curr" value="UAH" checked>Грн</label>
+            <label><input type="radio" name="curr" value="EUR">Евр</label>
+            <label><input type="radio" name="curr" value="USD">Дол</label>
+        </div>
+        <div>
+            <label for="total">Сумма к оплате:</label>
+            <input type="text" id="total" readonly>
+        </div>
+        <button onclick="calcul()">OK</button>
+    </div>
+    <script>
+        function calcul() {
+            const gasol = document.getElementById("Gas").checked;
+            const disel = document.getElementById("disel").checked;
+            const liters = parseFloat(document.getElementById("liters").value);
+            const priceGas = parseFloat(document.getElementById("priceGas").value);
+            const priceDisel = parseFloat(document.getElementById("priceDisel").value);
+            let total = 0;
+            if (gasol) total += liters * priceGas;
+            if (disel) total += liters * priceDisel;
+            const curr = document.querySelector('input[name="curr"]:checked').value;
+            let currSym = '';
+            if (curr === "UAH") currSym = ' грн';
+            if (curr === "EUR") currSym = ' Евр';
+            if (curr === "USD") currSym = ' Дол';
+            document.getElementById("total").value = total.toFixed(2) + currSym;
+            alert(`Сумма к оплате: ${total.toFixed(2)}${currSym}`);
+        }
+    </script>
+
+</body>
+</html>
